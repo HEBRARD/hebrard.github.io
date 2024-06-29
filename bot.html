@@ -21,15 +21,26 @@
     <div id="output"></div>
     <button class="micro-button" onclick="startRecording()">🎙️</button>
 
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.8.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/universal-sentence-encoder@4.3.0"></script>
     <script>
-        function startRecording() {
+        async function startRecording() {
             const recognition = new webkitSpeechRecognition();
             recognition.lang = 'fr-FR';
             recognition.start();
 
-            recognition.onresult = function(event) {
+            recognition.onresult = async function(event) {
                 const result = event.results[0][0].transcript;
                 document.getElementById('output').textContent = result;
+
+                // Utilisez TensorFlow.js pour traiter le texte et obtenir une réponse du chatbot
+                const model = await use.load();
+                const embeddings = await model.embed([result]);
+                const response = await model.predict(embeddings);
+                const answer = response.arraySync()[0];
+
+                // Affichez la réponse du chatbot
+                document.getElementById('output').textContent = answer;
             }
         }
     </script>
