@@ -21,6 +21,8 @@
     <div id="output"></div>
     <button class="micro-button" onclick="startRecording()">🎙️</button>
 
+    <div id="response"></div> <!-- Nouvel élément div pour la réponse du chatbot -->
+
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.8.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/universal-sentence-encoder@4.3.0"></script>
     <script>
@@ -35,27 +37,17 @@
 
                 // use result as input for a chatbot and return the response
                 const response = await getChatbotResponse(result);
-                document.getElementById('output').textContent = response;
+                document.getElementById('response').textContent = response; // Afficher la réponse dans le nouvel élément div
             };
-            
-            recognition.onend = function() {
-                recognition.start();
-            };
-
-            recognition.onerror = function(event) {
-                console.error(event.error);
-            };
-
-            async function getChatbotResponse(input) {
-                const model = await use.load();
-                const embeddings = await model.embed([input]);
-                const responseEmbeddings = await model.embed(['Bonjour']);
-                const response = await model.universalSentenceEncoder.knnEmbeddings(embeddings, responseEmbeddings, 1);
-                return response;
-            }
-
         }
 
+        async function getChatbotResponse(input) {
+            const model = await use.load();
+            const embeddings = await model.embed([input]);
+            const responseEmbeddings = await model.embed(['Bonjour']);
+            const response = await model.universalSentenceEncoder.knnEmbeddings(embeddings, responseEmbeddings, 1);
+            return response;
+        }
     </script>
 </body>
 </html>
