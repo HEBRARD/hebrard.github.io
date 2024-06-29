@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enregistrement vocal</title>
+    <style>
+        .micro-button {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: red;
+            color: white;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="output"></div>
+    <button class="micro-button" onclick="startRecording()">🎙️</button>
+
+    <script>
+        function startRecording() {
+            const recognition = new webkitSpeechRecognition();
+            recognition.lang = 'fr-FR';
+            recognition.start();
+
+            recognition.onresult = function(event) {
+                const result = event.results[0][0].transcript;
+                document.getElementById('output').textContent = result;
+            }
+        }
+    </script>
+</body>
+</html>
