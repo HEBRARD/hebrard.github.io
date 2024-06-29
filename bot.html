@@ -33,16 +33,29 @@
                 const result = event.results[0][0].transcript;
                 document.getElementById('output').textContent = result;
 
-                // Utilisez TensorFlow.js pour traiter le texte et obtenir une réponse du chatbot
-                const model = await use.load();
-                const embeddings = await model.embed([result]);
-                const response = await model.predict(embeddings);
-                const answer = response.arraySync()[0];
+                // use result as input for a chatbot and return the response
+                const response = await getChatbotResponse(result);
+                document.getElementById('output').textContent = response;
+            };
+            
+            recognition.onend = function() {
+                recognition.start();
+            };
 
-                // Affichez la réponse du chatbot
-                document.getElementById('output').textContent = answer;
+            recognition.onerror = function(event) {
+                console.error(event.error);
+            };
+
+            async function getChatbotResponse(input) {
+                const model = await use.load();
+                const embeddings = await model.embed([input]);
+                const responseEmbeddings = await model.embed(['Bonjour']);
+                const response = await model.universalSentenceEncoder.knnEmbeddings(embeddings, responseEmbeddings, 1);
+                return response;
             }
+
         }
+
     </script>
 </body>
 </html>
