@@ -2,7 +2,54 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Multiplications</title>
+    <title>Multiplications Transformers</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+        }
+
+        #question {
+            text-align: center;
+            font-size: 20px;
+            margin-top: 50px;
+        }
+
+        #answer {
+            display: block;
+            margin: 20px auto;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        #submit, #reset {
+            display: block;
+            margin: 0 auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        #submit:hover, #reset:hover {
+            background-color: #0056b3;
+        }
+
+        #score {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
             let score = 0;
@@ -44,7 +91,7 @@
     </script>
 </head>
 <body>
-    <h1>Pratiquez vos multiplications</h1>
+    <h1>Pratiquez vos multiplications avec les Transformers</h1>
     <div id="question"></div>
     <input type="number" id="answer">
     <button id="submit">Soumettre</button>
