@@ -123,7 +123,7 @@
             recognition.lang = 'fr-FR';
             recognition.start();
 
-            recognition.onresult = function(event) {
+            recognition.onresult = async function(event) {
                 const message = event.results[0][0].transcript;
                 appendMessage(message, 'user-message');
                 const response = await getChatbotResponse(message);
