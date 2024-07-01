@@ -116,9 +116,19 @@
             return response;
         }
 
+
         function startVoiceRecording() {
             // Code pour enregistrer la voix et envoyer le message
-            // Ajoutez votre propre implémentation ici
+            const recognition = new webkitSpeechRecognition();
+            recognition.lang = 'fr-FR';
+            recognition.start();
+
+            recognition.onresult = function(event) {
+                const message = event.results[0][0].transcript;
+                appendMessage(message, 'user-message');
+                const response = await getChatbotResponse(message);
+                appendMessage(response, 'bot-message');
+            }
         }
     </script>
 </body>
