@@ -60,6 +60,16 @@
             color: white;
             cursor: pointer;
         }
+
+        .voice-button {
+            margin-left: 5px;
+            padding: 5px;
+            border: none;
+            border-radius: 50%;
+            background-color: #4caf50;
+            color: white;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -69,6 +79,7 @@
         <div class="input-container">
             <input type="text" class="input-field" id="inputField" placeholder="Entrez votre message...">
             <button class="send-button" onclick="sendMessage()">Envoyer</button>
+            <button class="voice-button" onclick="startVoiceRecording()">&#128226;</button>
         </div>
     </div>
 
@@ -103,6 +114,11 @@
             const responseEmbeddings = await model.embed(['Bonjour']);
             const response = await model.universalSentenceEncoder.knnEmbeddings(embeddings, responseEmbeddings, 1);
             return response;
+        }
+
+        function startVoiceRecording() {
+            // Code pour enregistrer la voix et envoyer le message
+            // Ajoutez votre propre implémentation ici
         }
     </script>
 </body>
