@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Morpion Game</title>
+    <style>
+        /* style of the board */
+        #board {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        .row {
+            display: flex;
+        }
+
+        .cell {
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .cell:hover {
+            background-color: #f5f5f5;
+        }
+
+        .cell:active {
+            background-color: #e0e0e0;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Morpion Game</h1>
+    
+    <div id="board">
+        <!-- a classic board to play tic-tac-toe-->
+        <!-- the board is represented by a 3x3 grid of cells -->
+        <!-- each cell can be clicked to place a mark ('X' or 'O') -->
+        <!-- the game is over when a player wins or the board is full -->
+        <!-- the game can be restarted by refreshing the page -->
+        <div class="row">
+            <div class="cell" id="cell-0"></div>
+            <div class="cell" id="cell-1"></div>
+            <div class="cell" id="cell-2"></div>
+        </div>
+        <div class="row">
+            <div class="cell" id="cell-3"></div>
+            <div class="cell" id="cell-4"></div>
+            <div class="cell" id="cell-5"></div>
+        </div>
+        <div class="row">
+            <div class="cell" id="cell-6"></div>
+            <div class="cell" id="cell-7"></div>
+            <div class="cell" id="cell-8"></div>
+        </div>
+    </div>
+    
+    <script>
+        // the board can be interacted by 2 players on different devices
+        // the first player is always 'X' and the second player is 'O'
+        // the game is over when a player wins or the board is full
+        // the game can be restarted by refreshing the page
+
+        // the board is represented by an array of 9 elements
+        // each element can be 'X', 'O' or null
+        let board = [null, null, null, null, null, null, null, null, null];
+        let currentPlayer = null;
+
+        // prompt for player selection
+        function selectPlayer() {
+            currentPlayer = prompt("Select 'X' or 'O' to define the player:");
+            if (currentPlayer !== 'X' && currentPlayer !== 'O') {
+                alert("Invalid selection. Please choose 'X' or 'O'.");
+                selectPlayer();
+            }
+        }
+
+        // the function to check if a player has won
+        function checkWinner() {
+            // all the possible winning combinations
+            const winningCombinations = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8],
+                [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                [0, 4, 8], [2, 4, 6]
+            ];
+
+            // check if the current player has a winning combination
+            return winningCombinations.some(combination => {
+                return combination.every(index => board[index] === currentPlayer);
+            });
+        }
+
+        // the function to check if the board is full
+        function checkFull() {
+            return board.every(cell => cell !== null);
+        }
+
+        // the function to handle the click event on a cell
+        function handleCellClick(index) {
+            // if the cell is empty and the game is not over
+            if (board[index] === null && !checkWinner() && !checkFull()) {
+                // update the cell with the current player
+                board[index] = currentPlayer;
+                document.getElementById(`cell-${index}`).innerText = currentPlayer;
+
+                // if the current player has won
+                if (checkWinner()) {
+                    alert(`Player ${currentPlayer} wins!`);
+                } else if (checkFull()) {
+                    // if the board is full
+                    alert('It\'s a draw!');
+                } else {
+                    // switch the current player
+                    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                }
+            }
+        }
+
+        // add the click event listener to each cell
+        for (let i = 0; i < 9; i++) {
+            document.getElementById(`cell-${i}`).addEventListener('click', () => handleCellClick(i));
+        }
+
+        // select the player at the beginning of the game
+        selectPlayer();
+
+    </script>
+</body>
+</html>
